@@ -139,9 +139,9 @@ class Grammar {
 		$this->xml->startElement("rule");
 		$this->xml->writeAttribute("id", $id);
 		if(isset($scope)) {
-			$this->xml->writeAttribute("id", $scope);
+			$this->xml->writeAttribute("scope", $scope);
 		} else {
-			$this->xml->writeAttribute("id", GrammarScope::$private);
+			$this->xml->writeAttribute("scope", GrammarScope::$private);
 		}		
 	}
 	
@@ -151,9 +151,13 @@ class Grammar {
 	 * @param string $tag
 	 * @return void
 	 */
-	public function tag($tag) {
+	public function tag($tag, $cdata=false) {
 		$this->xml->startElement("tag");
-		$this->xml->text($tag);
+		if($cdata) {
+			$this->xml->writeCData($tag);
+		} else {
+			$this->xml->text($tag);
+		}		
 		$this->xml->endElement();
 	}
 	
